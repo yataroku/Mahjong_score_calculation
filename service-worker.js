@@ -1,6 +1,11 @@
-// Online: always use current files. Offline: use this version's cache.
-const CACHE_NAME = 'mahjong-calc-v8';
-const ASSETS = ['./index.html', './style.css', './app.js', './app.js?v=20261110-2', './manifest.json'];
+const CACHE_NAME = 'mahjong-calc-v9';
+const ASSETS = [
+  './',
+  './index.html',
+  './style.css',
+  './app.js',
+  './manifest.json'
+];
 
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
@@ -11,7 +16,11 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)));
+    await self.clients.claim();
+  })());
 });
 
 self.addEventListener('fetch', event => {
@@ -21,7 +30,7 @@ self.addEventListener('fetch', event => {
     try {
       const response = await fetch(event.request, { cache: 'no-store' });
       if (response.ok) {
-        try { await cache.put(event.request, response.clone()); } catch (error) { console.warn('Cache update failed', error); }
+        try { await cache.put(event.request, response.clone()); } catch (error) {}
       }
       return response;
     } catch (error) {

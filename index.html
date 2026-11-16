@@ -246,5 +246,15 @@
     <button type="button" class="reset-btn" onclick="resetApp()">条件をリセット</button>
 
     <script src="app.js"></script>
+    <script>
+        // Service Workerの登録（オフライン・PWA化に必須）
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(reg => console.log('Service Worker registered:', reg))
+                    .catch(err => console.error('Service Worker registration failed:', err));
+            });
+        }
+    </script>
 </body>
 </html>
