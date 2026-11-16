@@ -1,0 +1,265 @@
+:root {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --primary: #10b981;
+    --primary-hover: #059669;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: #334155;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    padding: 16px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: 16px;
+    color: var(--primary);
+}
+
+.section {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.section-title {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.toggle-group {
+    display: flex;
+    gap: 8px;
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 10px;
+    background: var(--bg-color);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.toggle-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.yaku-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+.yaku-btn {
+    padding: 8px 4px;
+    background: var(--bg-color);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-main);
+    font-size: 0.75rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+.yaku-btn.active {
+    background: #047857;
+    border-color: var(--primary);
+}
+
+/* チーボタンの幅を上の「- 0 +」（28px + 8px + 20px + 8px + 28px = 92px）に完全に揃え、0の真下に中央配置 */
+.toggle-chi-btn {
+    width: 92px;
+    padding: 6px 4px;
+}
+
+.yaku-category-title {
+    color: var(--primary);
+    margin: 10px 0 6px 0;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: 4px;
+}
+
+.block-title {
+    color: var(--primary);
+    margin: 12px 0 6px 0;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: 4px;
+}
+
+.mt-title {
+    margin-top: 14px;
+}
+
+.yakuman-details {
+    margin-top: 12px;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    background: var(--bg-color);
+}
+
+.yakuman-summary {
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.yakuman-grid {
+    margin-top: 8px;
+}
+
+.dora-row {
+    margin-top: 8px;
+}
+
+.method-row {
+    margin-top: 12px;
+}
+
+.input-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+}
+
+select {
+    background: var(--bg-color);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+    width: 55%;
+}
+
+.counter-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.counter-btn {
+    background: var(--bg-color);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.counter-value {
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+}
+
+.result-section {
+    background: linear-gradient(135deg, #065f46, #047857);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    margin-top: 16px;
+    border: 1px solid #34d399;
+    transition: background 0.3s, border-color 0.3s;
+}
+
+/* 役のランクに応じた背景色テーマ */
+.result-section.theme-default {
+    background: linear-gradient(135deg, #065f46, #047857);
+    border-color: #34d399;
+}
+.result-section.theme-mangan {
+    background: linear-gradient(135deg, #c2410c, #ea580c);
+    border-color: #fb923c;
+}
+.result-section.theme-hanchan {
+    background: linear-gradient(135deg, #b91c1c, #dc2626);
+    border-color: #f87171;
+}
+.result-section.theme-baiman {
+    background: linear-gradient(135deg, #6b21a8, #7e22ce);
+    border-color: #c084fc;
+}
+.result-section.theme-yakuman {
+    background: linear-gradient(135deg, #020617, #0f172a);
+    border-color: #475569;
+}
+
+.result-label {
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    margin-top: 4px;
+}
+
+.result-score {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 2px 0;
+}
+
+.result-sub {
+    font-size: 0.9rem;
+    color: #e2e8f0;
+}
+
+.reset-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: #f87171;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.reset-btn:hover {
+    background: #334155;
+    border-color: #f87171;
+}
+
+/* 鳴き制限時のスタイル */
+.input-row.kotsu-kan-row.locked {
+    opacity: 0.4;
+    pointer-events: none;
+}

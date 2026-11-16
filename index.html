@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>麻雀の点数計算</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+    <h1>🀄 麻雀の点数計算</h1>
+
+    <!-- 1. プレーヤー（親・子） -->
+    <div class="section">
+        <div class="section-title">1. プレーヤー</div>
+        <div class="toggle-group">
+            <button type="button" class="toggle-btn active" onclick="setRole('ko')">子</button>
+            <button type="button" class="toggle-btn" onclick="setRole('oya')">親</button>
+        </div>
+    </div>
+
+    <!-- 2. 役・状況選択 -->
+    <div class="section">
+        <div class="section-title">2. 役・状況選択</div>
+
+        <!-- ■ 1翻（役牌を統合） -->
+        <div class="yaku-category-title">■ 1翻・役牌</div>
+        <div class="yaku-grid">
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">リーチ</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">門前ツモ</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">タンヤオ</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">平和</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">一発</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">一盃口</button>
+            <!-- 役牌ボタン群（1つにつき1翻、連風牌のみ2翻） -->
+            <button type="button" class="yaku-btn yakuhai-select-btn" onclick="toggleYakuhai(this)">白</button>
+            <button type="button" class="yaku-btn yakuhai-select-btn" onclick="toggleYakuhai(this)">發</button>
+            <button type="button" class="yaku-btn yakuhai-select-btn" onclick="toggleYakuhai(this)">中</button>
+            <button type="button" class="yaku-btn yakuhai-select-btn" onclick="toggleYakuhai(this)">場風牌</button>
+            <button type="button" class="yaku-btn yakuhai-select-btn" onclick="toggleYakuhai(this)">自風牌</button>
+        </div>
+
+        <!-- ■ 2翻 -->
+        <div class="yaku-category-title">■ 2翻（三色・一通・チャンタは鳴き1翻）</div>
+        <div class="yaku-grid">
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">三色同順</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">三色同刻</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">一気通貫</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">チャンタ</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">対々和</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">七対子</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">三暗刻</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">三槓子</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">小三元</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">混老頭</button>
+            <button type="button" class="yaku-btn yakuhai-select-btn" onclick="toggleYakuhai(this)">連風牌(2翻)</button>
+        </div>
+
+        <!-- ■ 3翻・6翻 -->
+        <div class="yaku-category-title">■ 3翻・6翻（混一・純チャンは鳴き2翻 / 清一は鳴き5翻）</div>
+        <div class="yaku-grid">
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">二盃口</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">混一色</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">純チャン</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">清一色</button>
+        </div>
+
+        <!-- ■ その他（状況・偶然役） -->
+        <div class="yaku-category-title">■ その他（状況・偶然役）</div>
+        <div class="yaku-grid">
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">ダブル立直</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">海底摸月</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">河底撈魚</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">嶺上開花</button>
+            <button type="button" class="yaku-btn" onclick="toggleYaku(this)">槍槓</button>
+        </div>
+
+        <!-- 🀄 役満を選択するブロック（プルダウン式） -->
+        <details class="yakuman-details">
+            <summary class="yakuman-summary">
+                🀄 役満を選択する（必要なときだけ開く）
+            </summary>
+            <div class="yaku-grid yakuman-grid">
+                <button type="button" class="yaku-btn" onclick="toggleYaku(this)">国士無双</button>
+                <button type="button" class="yaku-btn" onclick="toggleYaku(this)">四暗刻</button>
+                <button type="button" class="yaku-btn" onclick="toggleYaku(this)">大三元</button>
+                <button type="button" class="yaku-btn" onclick="toggleYaku(this)">小四喜</button>
+                <button type="button" class="yaku-btn" onclick="toggleYaku(this)">大四喜</button>
+                <button type="button" class="yaku-btn" onclick="toggleYaku(this)">字一色</button>
+                <button type="button" class="yaku-btn" onclick="toggleYaku(this)">清老頭</button>
+                <button type="button" class="yaku-btn" onclick="toggleYaku(this)">緑一色</button>
+                <button type="button" class="yaku-btn" onclick="toggleYaku(this)">九蓮宝燈</button>
+                <button type="button" class="yaku-btn" onclick="toggleYaku(this)">四槓子</button>
+            </div>
+        </details>
+
+        <!-- ドラ・赤ドラ合算カウンター -->
+        <div class="input-row dora-row" style="margin-top: 12px; border-top: 1px solid var(--border); padding-top: 10px;">
+            <span>ドラ（裏・赤含む枚数）</span>
+            <div class="counter-box">
+                <button class="counter-btn" onclick="changeCount('dora-count', -1, 0, 12)">-</button>
+                <span class="counter-value" id="dora-count">0</span>
+                <button class="counter-btn" onclick="changeCount('dora-count', 1, 0, 12)">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. 手牌構成 -->
+    <div class="section">
+         <div class="section-title">3. 符計算・連荘</div>
+        <div class="block-title" style="margin-top: 0;">■ 鳴きなし（門前）</div>
+
+        <div class="input-row kotsu-kan-row">
+            <span>アンコ [4符]</span>
+            <div class="counter-box">
+                <button class="counter-btn" onclick="changeCount('a-kotsu', -1, 0, 4)">-</button>
+                <span class="counter-value" id="a-kotsu">0</span>
+                <button class="counter-btn" onclick="changeCount('a-kotsu', 1, 0, 4)">+</button>
+            </div>
+        </div>
+
+        <div class="input-row kotsu-kan-row">
+            <span>アンコ（ヤオチュウ） [8符]</span>
+            <div class="counter-box">
+                <button class="counter-btn" onclick="changeCount('ay-kotsu', -1, 0, 4)">-</button>
+                <span class="counter-value" id="ay-kotsu">0</span>
+                <button class="counter-btn" onclick="changeCount('ay-kotsu', 1, 0, 4)">+</button>
+            </div>
+        </div>
+
+        <div class="input-row kotsu-kan-row">
+            <span>アンカン [16符]</span>
+            <div class="counter-box">
+                <button class="counter-btn" onclick="changeCount('a-kan', -1, 0, 4)">-</button>
+                <span class="counter-value" id="a-kan">0</span>
+                <button class="counter-btn" onclick="changeCount('a-kan', 1, 0, 4)">+</button>
+            </div>
+        </div>
+
+        <div class="input-row kotsu-kan-row">
+            <span>アンカン（ヤオチュウ） [32符]</span>
+            <div class="counter-box">
+                <button class="counter-btn" onclick="changeCount('ay-kan', -1, 0, 4)">-</button>
+                <span class="counter-value" id="ay-kan">0</span>
+                <button class="counter-btn" onclick="changeCount('ay-kan', 1, 0, 4)">+</button>
+            </div>
+        </div>
+
+        <div class="block-title mt-title">■ 鳴きあり</div>
+
+        <div class="input-row kotsu-kan-row">
+            <span>ポン [2符]</span>
+            <div class="counter-box">
+                <button class="counter-btn" onclick="changeCount('m-kotsu', -1, 0, 4)">-</button>
+                <span class="counter-value" id="m-kotsu">0</span>
+                <button class="counter-btn" onclick="changeCount('m-kotsu', 1, 0, 4)">+</button>
+            </div>
+        </div>
+
+        <div class="input-row kotsu-kan-row">
+            <span>ポン（ヤオチュウ） [4符]</span>
+            <div class="counter-box">
+                <button class="counter-btn" onclick="changeCount('my-kotsu', -1, 0, 4)">-</button>
+                <span class="counter-value" id="my-kotsu">0</span>
+                <button class="counter-btn" onclick="changeCount('my-kotsu', 1, 0, 4)">+</button>
+            </div>
+        </div>
+
+        <div class="input-row kotsu-kan-row">
+            <span>カン [8符]</span>
+            <div class="counter-box">
+                <button class="counter-btn" onclick="changeCount('m-kan', -1, 0, 4)">-</button>
+                <span class="counter-value" id="m-kan">0</span>
+                <button class="counter-btn" onclick="changeCount('m-kan', 1, 0, 4)">+</button>
+            </div>
+        </div>
+
+        <div class="input-row kotsu-kan-row">
+            <span>カン（ヤオチュウ） [16符]</span>
+            <div class="counter-box">
+                <button class="counter-btn" onclick="changeCount('my-kan', -1, 0, 4)">-</button>
+                <span class="counter-value" id="my-kan">0</span>
+                <button class="counter-btn" onclick="changeCount('my-kan', 1, 0, 4)">+</button>
+            </div>
+        </div>
+
+        <div class="input-row chi-row" id="chi-row">
+            <span>チー（順子）</span>
+            <button type="button" class="yaku-btn toggle-chi-btn" id="chi-btn" onclick="toggleChi(this)">チーなし</button>
+        </div>
+
+        <div class="block-title mt-title">■ 手牌構成・和了方法</div>
+        
+        <div class="input-row">
+            <span>雀頭（頭）</span>
+            <select id="janto">
+                <option value="0">役なし・客風 (0符)</option>
+                <option value="2">役牌 (2符)</option>
+                <option value="4">連風牌 (4符)</option>
+            </select>
+        </div>
+
+        <div class="input-row">
+            <span>待ちの形</span>
+            <select id="machi">
+                <!-- 普段は「両面・シャボ」、リーチ時はJSで「両面」に書き換わります -->
+                <option value="0" id="machi-default-option">両面・シャンポン (0符)</option>
+                <option value="2" id="machi-reach-chao-m" style="display:none;">シャンポン (2符)</option>
+                <option value="4" id="machi-reach-chao-y" style="display:none;">シャンポン・ヤオチュウ牌 (4符)</option>
+                <option value="2">カンチャン・ペンチャン・単騎 (2符)</option>
+            </select>
+        </div>
+
+        <div class="input-row method-row">
+            <span>和了方式</span>
+            <select id="method">
+                <option value="ron">ロン和了</option>
+                <option value="tsumo">ツモ和了</option>
+            </select>
+        </div>
+
+        <!-- ■ 連荘 -->
+        <div class="block-title mt-title">■ 連荘</div>
+        <div class="input-row">
+            <span>本場</span>
+            <div class="counter-box">
+                <button class="counter-btn" onclick="changeCount('honba-count', -1, 0, 20)">-</button>
+                <span class="counter-value" id="honba-count">0</span>
+                <button class="counter-btn" onclick="changeCount('honba-count', 1, 0, 20)">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 結果エリア -->
+    <div class="result-section" id="resultSection">
+        <div class="result-sub" id="scoreDetail">-</div>
+        <div class="result-score" id="scoreOutput">役を選んでください</div>
+        <div class="result-label" id="scoreLabel">計算結果</div>
+    </div>
+
+    <!-- リセットボタン -->
+    <button type="button" class="reset-btn" onclick="resetApp()">条件をリセット</button>
+
+    <script src="app.js"></script>
+</body>
+</html>
