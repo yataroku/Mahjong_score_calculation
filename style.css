@@ -263,3 +263,12 @@ select {
     opacity: 0.4;
     pointer-events: none;
 }
+
+/* Netlifyの無料バッジを非表示にする */
+#netlify-badge, 
+iframe[src*="netlify.com"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
